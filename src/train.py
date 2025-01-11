@@ -94,6 +94,10 @@ class ProjectAgent:
         self.depth = self.config['depth']
         self.model = DQN(env, self.hidden_size, self.depth).to(self.device)
         self.target_model = deepcopy(self.model).to(self.device)
+
+        assert next(self.model.parameters()).is_cuda, "Le modèle principal n'est pas sur le GPU"
+        assert next(self.target_model.parameters()).is_cuda, "Le modèle cible n'est pas sur le GPU"
+
         self.criterion = self.config['criterion']
         self.lr = self.config['learning_rate']
         self.optimizer = torch.optim.Adam(self.model.parameters(), lr=self.lr)
@@ -118,7 +122,9 @@ class ProjectAgent:
 
     def gradient_step(self):
         if len(self.memory) > self.batch_size:
-            X, A, R, Y, D = self.memory.sample(self.batch_size)
+            X, A, R, Y, D = [tensor.to(self.device) for tensor in self.memory.sample(self.batch_size)]
+
+            #X, A, R, Y, D = self.memory.sample(self.batch_size)
             QYmax = self.target_model(Y).max(1)[0].detach()
             update = torch.addcmul(R, 1-D, QYmax, value=self.gamma)
             QXA = self.model(X).gather(1, A.to(torch.long).unsqueeze(1))
@@ -135,6 +141,8 @@ class ProjectAgent:
         epsilon = self.epsilon_max
         step = 0
         best_score = 0
+        print(f"[INFO] Entraînement sur : {self.device}")
+
         while episode < max_episode:
             if step > self.epsilon_delay:
                 epsilon = max(self.epsilon_min, epsilon-self.epsilon_step)
