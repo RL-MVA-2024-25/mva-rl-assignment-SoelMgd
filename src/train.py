@@ -56,7 +56,7 @@ class ProjectAgent:
             'model_name': 'best_agent',
             'gamma': 0.95,
             'batch_size': 512,
-            'buffer_size': 500000, #1M
+            'buffer_size': 1000000, #1M
             'epsilon_max': 1.0,
             'epsilon_min': 0.01,
             'epsilon_decay_period': 1000,
@@ -190,7 +190,7 @@ if __name__ == "__main__":
         'model_name': 'best_agent', #best_agent_4
         'max_episode': 200,
         'hidden_size': 256,
-        'depth': 5,
+        'depth': 6,
         'gamma': 0.95,
     }
 
