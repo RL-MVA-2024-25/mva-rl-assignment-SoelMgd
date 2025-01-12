@@ -56,7 +56,7 @@ class ProjectAgent:
             'model_name': 'best_agent',
             'gamma': 0.95,
             'batch_size': 512,
-            'buffer_size': 1000000,
+            'buffer_size': 500000, #1M
             'epsilon_max': 1.0,
             'epsilon_min': 0.01,
             'epsilon_decay_period': 1000,
@@ -95,8 +95,8 @@ class ProjectAgent:
         self.model = DQN(env, self.hidden_size, self.depth).to(self.device)
         self.target_model = deepcopy(self.model).to(self.device)
 
-        assert next(self.model.parameters()).is_cuda, "Le modèle principal n'est pas sur le GPU"
-        assert next(self.target_model.parameters()).is_cuda, "Le modèle cible n'est pas sur le GPU"
+        #assert next(self.model.parameters()).is_cuda, "Le modèle principal n'est pas sur le GPU"
+        #assert next(self.target_model.parameters()).is_cuda, "Le modèle cible n'est pas sur le GPU"
 
         self.criterion = self.config['criterion']
         self.lr = self.config['learning_rate']
