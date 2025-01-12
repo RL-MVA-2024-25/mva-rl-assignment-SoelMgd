@@ -24,10 +24,8 @@ if __name__ == "__main__":
     if not file.is_file():
         seed_everything(seed=42)
         # Initialization of the agent. Replace DummyAgent with your custom agent implementation.
-        print("[INFO] Load agent")
         agent = ProjectAgent()
         agent.load()
-        print("[INFO] Evaluate agent")
         # Evaluate agent and write score.
         score_agent: float = evaluate_HIV(agent=agent, nb_episode=5)
         score_agent_dr: float = evaluate_HIV_population(agent=agent, nb_episode=20)

@@ -1,4 +1,5 @@
 train_fqi_model.py
+best_agent_soel.pth
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -6,7 +6,7 @@ def test_expected_result_one_env_3432807():
     with open("score.txt") as file:
         lines = [float(line.rstrip()) for line in file]
     one_env_performance = lines[0]
-    assert one_env_performance >= 3432807.680391572 
+    assert one_env_performance >= 3432807.680391572
 
 def test_expected_result_one_env_1e8():
     """Test if the one environment performance meets the 1e8 threshold."""
